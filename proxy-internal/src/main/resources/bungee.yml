@@ -1,0 +1,4 @@
+name: ServerCommands
+version: @version@
+author: Vihara
+main: net.astrona.proxy.ProxyPlugin

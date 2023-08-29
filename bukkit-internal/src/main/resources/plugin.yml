@@ -1,0 +1,9 @@
+name: ServerCommands
+author: Vihara
+version: @version@
+main: net.astrona.bukkit.BukkitPlugin
+description: The ServerCommands bukkit plugin.
+commands:
+  server:
+    description: "Executes a server command."
+    permission: "servercommands.use"
