@@ -7,6 +7,6 @@ public class ProxyPlugin extends Plugin {
     @Override
     public void onEnable() {
         getProxy().registerChannel("server-commands:messaging");
-        getProxy().getPluginManager().registerListener(this, new PluginMessageListener());
+        getProxy().getPluginManager().registerListener(this, new PluginMessageListener(this, getProxy()));
     }
 }

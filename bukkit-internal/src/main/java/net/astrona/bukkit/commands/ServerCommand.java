@@ -25,15 +25,16 @@ public class ServerCommand implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length < 2) {
-            sender.sendMessage(ChatColor.DARK_RED + "Usage: /server <server> <command>");
+            sender.sendMessage(ChatColor.DARK_RED + "Usage: /server <server> <-p|-c> <command>");
             return false;
         }
 
         String server = args[0];
-        String cmd = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
+        String senderType = args[1].equalsIgnoreCase("-p") ? "player" : args[1].equalsIgnoreCase("-c") ? "console" : "none";
+        String cmd = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
 
-        if (server == null || cmd == null || server.isEmpty() || cmd.isEmpty()) {
-            sender.sendMessage(ChatColor.DARK_RED + "The specified server or the specified command either doesn't exist or was not provided.");
+        if (server == null || senderType.equalsIgnoreCase("none") || cmd == null || server.isEmpty() || cmd.isEmpty()) {
+            sender.sendMessage(ChatColor.DARK_RED + "The specified server or the specified command & sender either doesn't exist or was not provided.");
             return false;
         }
 
@@ -49,7 +50,7 @@ public class ServerCommand implements TabExecutor {
             player = onlinePlayers.iterator().next();
         }
 
-        sendProxyMessage(player, "server-commands:messaging", server, cmd);
+        sendProxyMessage(player, "server-commands:messaging", server, senderType + "::" + cmd);
         return true;
     }
 

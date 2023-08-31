@@ -18,8 +18,17 @@ public class PluginMessageHandler implements PluginMessageListener {
         DataInputStream in = new DataInputStream(new ByteArrayInputStream(message));
         try {
             String subChannel = in.readUTF();
-            Bukkit.getServer().getLogger().info(subChannel);
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), subChannel);
+            String[] splitSubChannel = subChannel.split("::");
+
+            switch (splitSubChannel[0]) {
+                case "player":
+                    Player sender = Bukkit.getPlayer(splitSubChannel[1]);
+                    sender.performCommand(splitSubChannel[2]);
+                    break;
+                case "console":
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), splitSubChannel[2]);
+                    break;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
