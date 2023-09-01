@@ -33,6 +33,13 @@ public class ServerCommand implements TabExecutor {
         String senderType = args[1].equalsIgnoreCase("-p") ? "player" : args[1].equalsIgnoreCase("-c") ? "console" : "none";
         String cmd = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
 
+        if (senderType.equalsIgnoreCase("console")) {
+            if (!sender.hasPermission("servercommands.use.console")) {
+                sender.sendMessage(ChatColor.DARK_RED + "You do not have permission to use the console sender type.");
+                return false;
+            }
+        }
+
         if (server == null || senderType.equalsIgnoreCase("none") || cmd == null || server.isEmpty() || cmd.isEmpty()) {
             sender.sendMessage(ChatColor.DARK_RED + "The specified server or the specified command & sender either doesn't exist or was not provided.");
             return false;
